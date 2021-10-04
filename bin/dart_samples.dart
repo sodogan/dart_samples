@@ -1,5 +1,48 @@
-import 'package:dart_samples/dart_samples.dart' as dart_samples;
+import '../bin/eshop/firebase_auth_tester.dart' as tester;
+import 'eshop/product_list.dart';
+import 'eshop/product.dart';
 
-void main(List<String> arguments) {
-  print('Hello world: ${dart_samples.calculate()}!');
+void main(List<String> arguments) async {
+  try {
+    final _authTester = tester.FireBaseAuthTester();
+//First test the Firebase signup
+/* To test the sign-up
+    final _authProvider = await _authTester.testSignUp(
+      emailAddress: 'solendogan.sap@gmail.com',
+      password: 'Taksim12',
+    );
+
+    print(_authProvider);
+*/
+
+    final _authProvider = await _authTester.testSignIn(
+      emailAddress: 'solendogan@gmail.com',
+      password: 'Taksim12',
+    );
+
+    print(_authProvider);
+
+    if (_authProvider.isAuthenticated) {
+      final _list = await _authTester.testUserProductsFetch(
+        idToken: _authProvider.idToken!,
+        userID: _authProvider.userID!,
+      );
+
+      print(_list);
+    }
+
+    //Now trying to test the signin
+
+  } catch (err) {
+    print(err);
+  }
+}
+
+Product get getAnyProduct {
+  return Product(
+      id: DateTime.now().toString(),
+      title: 'blue blue shirt',
+      price: 11,
+      description: 'a shirt',
+      imageUrl: 'local');
 }

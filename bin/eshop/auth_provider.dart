@@ -8,8 +8,8 @@ class AuthProvider {
 
   String? get userID => _userID;
   String? get idToken => _idToken;
-  DateTime? get expryDate=>_expiryDate;
-  bool get isAuthenticated=>_isAuthenticated;
+  DateTime? get expiryDate => _expiryDate;
+  bool get isAuthenticated => _isAuthenticated;
 
   /*
 {
@@ -51,9 +51,17 @@ class AuthProvider {
     //set
     _userID = result['localId'];
     _idToken = result['idToken'];
-    final _seconds  = int.parse(result['expiresIn']);
-    final _dateParsed = DateTime.now().add(Duration(seconds:_seconds ));
+    final _seconds = int.parse(result['expiresIn']);
+    final _dateParsed = DateTime.now().add(Duration(seconds: _seconds));
     _expiryDate = _dateParsed;
     _isAuthenticated = true;
+  }
+
+  @override
+  String toString() {
+    return 'UserID: $userID'
+        'Token: $idToken'
+        'ExpiryDate: $expiryDate'
+        'isAuthenticated: $isAuthenticated';
   }
 }

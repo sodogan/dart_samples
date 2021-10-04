@@ -20,7 +20,7 @@ abstract class ListProvider {
   removeProduct({required int index});
 }
 
-class ProductList extends ListProvider  {
+class ProductList extends ListProvider {
   UnmodifiableListView<Product> get productList =>
       UnmodifiableListView(_productList);
 
@@ -31,28 +31,27 @@ class ProductList extends ListProvider  {
   }
 
   @override
-  Future<void> addProduct({
+  Future<String> addProduct({
     required Product product,
   }) async {
 //Need to use the firebaseutil
     try {
-      final _id =
-      await firebase.FirebaseUtility().productFirebaseAsyncPost(data: product.toJson());
+      final _id = await firebase.FirebaseUtility()
+          .productFirebaseAsyncPost(data: product.toJson());
       //set the generated id
       final _newProduct = product.copyWith(newId: _id);
       _productList.add(_newProduct);
-
+      return _id;
     } catch (err) {
       rethrow;
     }
   }
 
-
-  Future<void> fetchUserProducts({required String authToken,required String userId}) async {
+  Future<void> fetchUserProducts(
+      {required String authToken, required String userId}) async {
     try {
-      final Map<String, dynamic> _products =
-      await firebase.FirebaseUtility().fetchAllProductsFirebaseAsync(
-          authToken: authToken,userId: userId);
+      final Map<String, dynamic> _products = await firebase.FirebaseUtility()
+          .fetchAllProductsFirebaseAsync(authToken: authToken, userId: userId);
 
       //transform the data which is a Map of Maps
       _products.forEach((productID, value) {
@@ -69,9 +68,8 @@ class ProductList extends ListProvider  {
 
   Future<void> fetchAllProducts({required String authToken}) async {
     try {
-      final Map<String, dynamic> _products =
-      await firebase.FirebaseUtility().fetchAllProductsFirebaseAsync(
-          authToken: authToken);
+      final Map<String, dynamic> _products = await firebase.FirebaseUtility()
+          .fetchAllProductsFirebaseAsync(authToken: authToken);
 
       //transform the data which is a Map of Maps
       _products.forEach((productID, value) {
@@ -86,11 +84,9 @@ class ProductList extends ListProvider  {
     }
   }
 
-   bool findMatching({required String id}) {
-      return _productList.any((product) => product.id  == id );
-    }
-
-
+  bool findMatching({required String id}) {
+    return _productList.any((product) => product.id == id);
+  }
 
   @override
   Future<void> updateExistingProduct({
@@ -103,7 +99,7 @@ class ProductList extends ListProvider  {
     print('Updating Product id: $id');
     //find the matching product!
     final _index =
-    _productList.indexWhere((Product product) => product.id == id);
+        _productList.indexWhere((Product product) => product.id == id);
     assert(_index != -1, 'Failed to find the matching Product ID');
 
     final _jsonData = {
@@ -123,8 +119,6 @@ class ProductList extends ListProvider  {
           description: description,
           imageUrl: imageUrl,
           price: price);
-
-
     } catch (err) {
       rethrow;
     }
@@ -141,7 +135,6 @@ class ProductList extends ListProvider  {
       //remove the item
 
       _productList.removeAt(index);
-
     } catch (err) {
       rethrow;
     }
