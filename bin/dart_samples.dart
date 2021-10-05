@@ -23,10 +23,14 @@ void main(List<String> arguments) async {
     print(_authProvider);
 
     if (_authProvider.isAuthenticated) {
+      /*to get the users products
       final _list = await _authTester.testUserProductsFetch(
         idToken: _authProvider.idToken!,
         userID: _authProvider.userID!,
       );
+      */
+      final _list = await _authTester.testAllProductsFetch(
+          idToken: _authProvider.idToken!);
 
       print(_list);
     }

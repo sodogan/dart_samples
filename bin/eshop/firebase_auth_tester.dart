@@ -35,6 +35,20 @@ class FireBaseAuthTester {
     }
   }
 
+  Future<UnmodifiableListView<Product>> testAllProductsFetch(
+      {required String idToken}) async {
+    final productListProvider = ProductList();
+    //Now get the token from the auth
+    try {
+      await productListProvider.fetchAllProducts(authToken: idToken);
+
+      //the list of products fetched!
+      return productListProvider.productList;
+    } catch (err) {
+      rethrow;
+    }
+  }
+
   Future<UnmodifiableListView<Product>> testUserProductsFetch(
       {required String idToken, required String userID}) async {
     final productListProvider = ProductList();
