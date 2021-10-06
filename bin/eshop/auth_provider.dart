@@ -1,4 +1,5 @@
 import '../firebase/firebase_utility.dart' as firebase;
+import 'dart:convert';
 
 class AuthProvider {
   String? _userID;
@@ -11,7 +12,7 @@ class AuthProvider {
   DateTime? get expiryDate => _expiryDate;
   bool get isAuthenticated => _isAuthenticated;
 
-  /*
+/*
 {
   "idToken": "[ID_TOKEN]",
   "email": "[user@example.com]",

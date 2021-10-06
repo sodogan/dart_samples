@@ -1,6 +1,7 @@
 import '../bin/eshop/firebase_auth_tester.dart' as tester;
 import 'eshop/product_list.dart';
 import 'eshop/product.dart';
+import 'exceptions/http_exception.dart';
 
 void main(List<String> arguments) async {
   try {
@@ -37,8 +38,10 @@ void main(List<String> arguments) async {
 
     //Now trying to test the signin
 
+  } on HttpException catch (exception) {
+    print(exception);
   } catch (err) {
-    print(err);
+    print('Another exception occcured');
   }
 }
 

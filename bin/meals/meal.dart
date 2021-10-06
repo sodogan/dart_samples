@@ -11,24 +11,23 @@ class Affordability {
 
   const Affordability._(this._name);
 
-  get name=>_name;
+  get name => _name;
 
   @override
   bool operator ==(Object other) {
     return name == (other as Affordability).name;
   }
+
   @override
   String toString() => _name;
 }
 
-
 mixin Allergenics on Food {
-  bool glutenFree =false;
-  bool vegan  = false;
+  bool glutenFree = false;
+  bool vegan = false;
   bool vegetarian = false;
   bool lactoseFree = false;
 }
-
 
 abstract class Food {
   final String _id;
@@ -37,17 +36,19 @@ abstract class Food {
   final Affordability _affordability;
   final Complexity _complexity;
 
-  Food(this._id,
-      this._title,
-      this._imageUrl,
-      this._affordability,
-      this._complexity,);
+  Food(
+    this._id,
+    this._title,
+    this._imageUrl,
+    this._affordability,
+    this._complexity,
+  );
 
-  get id=>_id;
-  get title =>_title;
-  get imageUrl=>_imageUrl;
-  get affordability=>_affordability;
-  get complexity=>_complexity;
+  get id => _id;
+  get title => _title;
+  get imageUrl => _imageUrl;
+  get affordability => _affordability;
+  get complexity => _complexity;
 
   @override
   String toString() {
@@ -61,14 +62,13 @@ abstract class Food {
   bool get isVegetarian;
 }
 
-
-class Meal  extends Food with Allergenics{
+class Meal extends Food with Allergenics {
   final int duration;
   final List<String> categoryIDSBelongTo;
   final List<String> ingredients;
   final List<String> steps;
 
-   Meal({
+  Meal({
     required String id,
     required String title,
     required String imageUrl,
@@ -82,34 +82,38 @@ class Meal  extends Food with Allergenics{
     required bool isLactoseFree,
     required bool isVegan,
     required bool isVegetarian,
-  }):super(id,title,imageUrl,affordability,complexity,) {
-     glutenFree = isGlutenFree;
-     lactoseFree = isLactoseFree;
-     vegan = isVegan;
-     vegetarian = isVegetarian;
-   }
+  }) : super(
+          id,
+          title,
+          imageUrl,
+          affordability,
+          complexity,
+        ) {
+    glutenFree = isGlutenFree;
+    lactoseFree = isLactoseFree;
+    vegan = isVegan;
+    vegetarian = isVegetarian;
+  }
 
-  UnmodifiableListView<String> get AllIngredieants=>UnmodifiableListView(ingredients);
+  UnmodifiableListView<String> get AllIngredients =>
+      UnmodifiableListView(ingredients);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Meal &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
-
+      other is Meal && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode ^ title.hashCode;
 
   @override
-  String toString(){
+  String toString() {
     return 'id: $id'
-           'title: $title'
-           'isGlutenFree: $isGlutenFree'
-           'isLactoseFree: $isLactoseFree'
-           'isVegan: $isVegan'
-           'isVegetarian: $isVegetarian';
+        'title: $title'
+        'isGlutenFree: $isGlutenFree'
+        'isLactoseFree: $isLactoseFree'
+        'isVegan: $isVegan'
+        'isVegetarian: $isVegetarian';
   }
 
   @override

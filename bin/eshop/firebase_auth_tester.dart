@@ -7,18 +7,33 @@ import 'product_list.dart';
 import 'cart.dart';
 
 class FireBaseAuthTester {
-  Future<authentication.AuthProvider> testSignIn({
-    required String emailAddress,
-    required String password,
-  }) async {
-    final authProvider = authentication.AuthProvider();
-
+  /*
+ /* Can also use awit
     try {
       await authProvider.signIn(emailAddress: emailAddress, password: password);
       return authProvider;
     } catch (err) {
       rethrow;
     }
+*/
+ */
+  Future<authentication.AuthProvider> testSignIn({
+    required String emailAddress,
+    required String password,
+  }) {
+    final authProvider = authentication.AuthProvider();
+
+    return authProvider
+        .signIn(
+      emailAddress: emailAddress,
+      password: password,
+    )
+        .then((_) {
+      print('Reaches here even void');
+      return authProvider;
+    }).catchError((onError) {
+      throw onError;
+    });
   }
 
   Future<authentication.AuthProvider> testSignUp({
